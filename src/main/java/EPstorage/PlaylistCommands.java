@@ -41,14 +41,27 @@ public class PlaylistCommands {
      */
     public void setToPlaylist(String name, TreeMap<String, ArrayList<String>> flagMap) throws IOException {
         if (flagMap.containsKey("-n") && !flagMap.containsKey("-d")) {
-            setPlaylistName(name, flagMap.get("-n").get(0).trim());
+            setPlaylistName(name, appendFlagMap(flagMap.get("-n")));
         }
         if (flagMap.containsKey("-d") && !flagMap.containsKey("-n")) {
-            setPlaylistDescription(name, flagMap.get("-d").get(0).trim());
+            setPlaylistDescription(name, appendFlagMap(flagMap.get("-d")));
         }
         if (flagMap.containsKey("-d") && flagMap.containsKey("-n")) {
-            setAll(name, flagMap.get("-n").get(0), flagMap.get("-d").get(0).trim());
+            setAll(name, appendFlagMap(flagMap.get("-n")), appendFlagMap(flagMap.get("-d")));
         }
+    }
+
+    public String appendFlagMap(ArrayList<String> flagMapArrayList) {
+        String appends = "";
+        boolean flag = true;
+        for (String log : flagMapArrayList) {
+            if (!flag) {
+                appends += ",";
+            }
+            appends += log;
+            flag = false;
+        }
+        return appends;
     }
 
     /**

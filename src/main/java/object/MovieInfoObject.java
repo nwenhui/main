@@ -18,7 +18,7 @@ public class MovieInfoObject {
     private double movieRating;
     private long[] movieGenreIDs;
     private boolean adult;
-
+    private Collection collection;
 
         /**
          * Construct info about a movie/tv show
@@ -31,7 +31,7 @@ public class MovieInfoObject {
          * @param posterPath Filepath of the movie/tv show poster.
          * @param backdropPath Filepath of the movie/tv show backdrop poster.
          */
-    public MovieInfoObject(long ID, String title, Date date, String summary, double rating, long[] genreIDs, String posterPath, String backdropPath, boolean adult) {
+    public MovieInfoObject(long ID, String title, Date date, String summary, double rating, long[] genreIDs, String posterPath, String backdropPath, boolean adult, Collection collection) {
         movieID = ID;
         movieTitle = title;
         movieReleaseDate = date;
@@ -41,6 +41,7 @@ public class MovieInfoObject {
         movieBackdropPath = backdropPath;
         movieGenreIDs = genreIDs;
         this.adult = adult;
+        this.collection = collection;
     }
 
     /**
@@ -112,5 +113,9 @@ public class MovieInfoObject {
 
     public boolean isAdult() {
         return adult;
+    }
+
+    public Collection getCollection() {
+        return collection;
     }
 }

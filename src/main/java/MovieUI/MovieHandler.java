@@ -64,6 +64,7 @@ public class MovieHandler extends Controller implements RequestListener {
     @FXML Label userAgeLabel;
     @FXML Label adultLabel;
     @FXML TextFlow genreListText;
+    @FXML Label playlistLabel;
 
     private UserProfile userProfile;
     private ArrayList<Playlist> playlists;
@@ -156,6 +157,7 @@ public class MovieHandler extends Controller implements RequestListener {
         restrictions.setFill(Paint.valueOf("#EC7063"));
         genreListText.getChildren().clear();
         genreListText.getChildren().addAll(preferences, restrictions);
+        playlistLabel.setText(Integer.toString(playlists.size()));
     }
 
     @FXML public void initialize() throws IOException {

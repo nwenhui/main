@@ -1,5 +1,6 @@
 package movieRequesterAPI;
 
+import object.Collection;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -60,6 +61,8 @@ public class RetrieveRequest implements InfoFetcher, InfoFetcherWithPreference {
     private static final String kMOVIE_POSTER_PATH = "poster_path";
     private static final String kMOVIE_CAST = "cast_id";
     private static final String kADULT = "adult";
+    private static final String kCOLLECTION = "belongs_to_collection";
+    private static final String kCOLLECTION_ID = "id";
 
     public static String getCastStrings(MovieInfoObject mMovie) {
 
@@ -478,7 +481,9 @@ public class RetrieveRequest implements InfoFetcher, InfoFetcherWithPreference {
         String posterPath = (String) movieData.get(kMOVIE_POSTER_PATH);
         String backdropPath = (String) movieData.get(kMOVIE_BACKDROP_PATH);
 
-        MovieInfoObject movieInfo = new MovieInfoObject(ID, title, releaseDate, summary, rating, genreIDs, posterPath, backdropPath, adult);
+        Collection collection = (Collection) movieData.get(kCOLLECTION);
+
+        MovieInfoObject movieInfo = new MovieInfoObject(ID, title, releaseDate, summary, rating, genreIDs, posterPath, backdropPath, adult, collection);
 
         // If the base url was fetched and loaded, set the root path and poster size
         if (mImageBaseURL != null) {
