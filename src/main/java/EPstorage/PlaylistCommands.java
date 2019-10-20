@@ -1,9 +1,8 @@
 package EPstorage;
 
 import object.MovieInfoObject;
-import object.testMovieInfoObject;
+import object.playlistMovieInfoObject;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,7 +14,7 @@ public class PlaylistCommands {
     String playlistName;
     private EditPlaylistJson editPlaylistJson;
 
-    public PlaylistCommands(String name) throws FileNotFoundException {
+    public PlaylistCommands(String name) {
         playlistName = name;
         editPlaylistJson = new EditPlaylistJson(name);
     }
@@ -25,7 +24,7 @@ public class PlaylistCommands {
         editPlaylistJson.createPlaylist(playlist);
     }
 
-    public void delete() throws FileNotFoundException {
+    public void delete() {
         editPlaylistJson.deletePlaylist();
     }
 
@@ -40,7 +39,7 @@ public class PlaylistCommands {
             System.out.println("hello looky here " + mMovies.get(index).getFullPosterPath());
         }
         Playlist playlist = editPlaylistJson.load();
-        ArrayList<testMovieInfoObject> newPlaylistMovies = convert(playlistMovies);
+        ArrayList<playlistMovieInfoObject> newPlaylistMovies = convert(playlistMovies);
         playlist.add(newPlaylistMovies);
         editPlaylistJson.editPlaylist(playlist);
     }
@@ -55,7 +54,7 @@ public class PlaylistCommands {
             playlistMovies.add(mMovies.get(index));
         }
         Playlist playlist = editPlaylistJson.load();
-        ArrayList<testMovieInfoObject> newPlaylistMovies = convert(playlistMovies);
+        ArrayList<playlistMovieInfoObject> newPlaylistMovies = convert(playlistMovies);
         if (playlist.getMovies().get(1).equals(newPlaylistMovies.get(0))) {
             System.out.println("yes");
         } else {
@@ -74,14 +73,14 @@ public class PlaylistCommands {
         editPlaylistJson.editPlaylist(playlist);
     }
 
-    private ArrayList<testMovieInfoObject> convert(ArrayList<MovieInfoObject> movies) {
-        ArrayList<testMovieInfoObject> testMovies = new ArrayList<>();
+    private ArrayList<playlistMovieInfoObject> convert(ArrayList<MovieInfoObject> movies) {
+        ArrayList<playlistMovieInfoObject> testMovies = new ArrayList<>();
         for (MovieInfoObject log : movies) {
             Date date = log.getReleaseDate();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String string = dateFormat.format(date);
             System.out.println("help " + log.getTitle() + " " + log.getFullPosterPath());
-            testMovieInfoObject testMovie = new testMovieInfoObject(log.getID(), log.getTitle(), string, log.getSummary(), log.getRating(), log.getGenreIDs(), log.getFullPosterPath(), log.getFullBackdropPath(), log.isAdult());
+            playlistMovieInfoObject testMovie = new playlistMovieInfoObject(log.getID(), log.getTitle(), string, log.getSummary(), log.getRating(), log.getGenreIDs(), log.getFullPosterPath(), log.getFullBackdropPath(), log.isAdult());
             testMovies.add(testMovie);
         }
         return testMovies;

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 /**
  * class that deals with editing the UserProfile.json file
@@ -31,11 +29,7 @@ public class EditProfileJson {
      * update json file with any changes made to user profile
      */
     public void updateProfile(UserProfile userProfile) throws IOException {
-//        File oldFile = file;
-//        File newFile = new File("EPdata/tempUserProfile.json");
         mapper.writeValue(file, userProfile);
         inputStream.close();
-//        oldFile.delete();
-//        newFile.renameTo(new File(file.getAbsolutePath()));
     }
 }

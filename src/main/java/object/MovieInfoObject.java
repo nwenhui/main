@@ -18,7 +18,6 @@ public class MovieInfoObject {
     private double movieRating;
     private long[] movieGenreIDs;
     private boolean adult;
-//    private Collection collection;
 
     public MovieInfoObject() {
         movieID = 0;
@@ -31,7 +30,7 @@ public class MovieInfoObject {
         movieFullBackdropPath = "";
         movieRating = 0;
         movieGenreIDs = new long[1];
-        boolean adult = true;
+        adult = true;
     }
 
         /**
@@ -55,7 +54,6 @@ public class MovieInfoObject {
         movieBackdropPath = backdropPath;
         movieGenreIDs = genreIDs;
         this.adult = adult;
-//        this.collection = collection;
     }
 
     /**
@@ -136,12 +134,4 @@ public class MovieInfoObject {
     public String getBackdropPath() {
         return movieBackdropPath;
     }
-
-    public void setMovieBackdropPath(String movieBackdropPath) {
-        this.movieBackdropPath = movieBackdropPath;
-    }
-
-    //    public Collection getCollection() {
-//        return collection;
-//    }
 }

@@ -81,11 +81,6 @@ public class Main extends Application {
         mainWindow.setScene(mainMoviesScene);
     }
 
-
-
-
-
-
     public void transitToPlaylistController() {
         try {
             FXMLLoader loader = new FXMLLoader();

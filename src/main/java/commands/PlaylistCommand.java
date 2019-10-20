@@ -52,10 +52,8 @@ public class PlaylistCommand extends CommandSuper {
      */
     private void executeCreatePlaylist() throws IOException {
         MovieHandler movieHandler = ((MovieHandler) this.getUIController());
-//        PlaylistCommands command = new PlaylistCommands(movieHandler.getPlaylists());
-//        ProfileCommands profileCommands = new ProfileCommands(new EditProfileJson().load());
-//        profileCommands.addPlaylist(this.getPayload());
-//        command.newPlaylist(this.getPayload());
+        ProfileCommands profileCommands = new ProfileCommands(new EditProfileJson().load());
+        profileCommands.addPlaylist(this.getPayload());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.create();
         movieHandler.clearSearchTextField();
@@ -71,10 +69,8 @@ public class PlaylistCommand extends CommandSuper {
      */
     private void executeDeletePlaylist() throws IOException {
         MovieHandler movieHandler = ((MovieHandler) this.getUIController());
-//        PlaylistCommands command = new PlaylistCommands(movieHandler.getPlaylists());
         ProfileCommands profileCommands = new ProfileCommands(new EditProfileJson().load());
         profileCommands.deletePlaylist(this.getPayload());
-//        command.deletePlaylist(this.getPayload());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.delete();
         movieHandler.clearSearchTextField();
@@ -90,8 +86,6 @@ public class PlaylistCommand extends CommandSuper {
      */
     private void executeAddToPlaylist() throws IOException {
         MovieHandler movieHandler = ((MovieHandler) this.getUIController());
-//        PlaylistCommands command = new PlaylistCommands(movieHandler.getPlaylists());
-//        command.addToPlaylist(this.getPayload(), this.getFlagMap(), movieHandler.getmMovies());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.add(this.getFlagMap(), movieHandler.getmMovies());
         movieHandler.clearSearchTextField();
@@ -106,8 +100,6 @@ public class PlaylistCommand extends CommandSuper {
      */
     private void executeRemoveFromPlaylist() throws IOException {
         MovieHandler movieHandler = ((MovieHandler) this.getUIController());
-//        PlaylistCommands command = new PlaylistCommands(movieHandler.getPlaylists());
-//        command.removeFromPlaylist(this.getPayload(), this.getFlagMap(), movieHandler.getmMovies());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.remove(this.getFlagMap(), movieHandler.getmMovies());
         movieHandler.clearSearchTextField();
@@ -122,8 +114,6 @@ public class PlaylistCommand extends CommandSuper {
      */
     private void executeSetToPlaylist() throws IOException {
         MovieHandler movieHandler = ((MovieHandler) this.getUIController());
-//        PlaylistCommands command = new PlaylistCommands(movieHandler.getPlaylists());
-//        command.setToPlaylist(this.getPayload(), this.getFlagMap());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.setToPlaylist(this.getFlagMap());
         movieHandler.clearSearchTextField();
@@ -138,8 +128,6 @@ public class PlaylistCommand extends CommandSuper {
      */
     private void executeClearPlaylist() throws IOException {
         MovieHandler movieHandler = ((MovieHandler)this.getUIController());
-//        PlaylistCommands command = new PlaylistCommands(movieHandler.getPlaylists());
-//        command.clearPlaylist(this.getPayload());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.clear();
         movieHandler.clearSearchTextField();

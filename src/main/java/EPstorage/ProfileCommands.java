@@ -12,12 +12,11 @@ import java.util.TreeMap;
  * class that contains all methods that deal with Profile object
  */
 public class ProfileCommands {
-    private File genreList;
     private UserProfile userProfile;
     private EditProfileJson editProfileJson;
 
     public ProfileCommands(UserProfile userProfile) throws FileNotFoundException {
-        genreList = new File("../../../../EPdata/genreIDlist.txt");
+//        File genreList = new File("../../../../EPdata/genreIDlist.txt");
         this.userProfile = userProfile;
         this.editProfileJson = new EditProfileJson();
     }

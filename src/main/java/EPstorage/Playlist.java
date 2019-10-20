@@ -1,14 +1,13 @@
 package EPstorage;
 
-import object.MovieInfoObject;
-import object.testMovieInfoObject;
+import object.playlistMovieInfoObject;
 
 import java.util.ArrayList;
 
 public class Playlist {
     private String playlistName;
     private String description;
-    private ArrayList<testMovieInfoObject> movies;
+    private ArrayList<playlistMovieInfoObject> movies;
 
     public Playlist(String playlistName) {
         this.playlistName = playlistName;
@@ -16,7 +15,7 @@ public class Playlist {
         movies = new ArrayList<>();
     }
 
-    public Playlist(String playlistName, String description, ArrayList<testMovieInfoObject> movies) {
+    public Playlist(String playlistName, String description, ArrayList<playlistMovieInfoObject> movies) {
         this.playlistName = playlistName;
         this.description = description;
         this.movies = movies;
@@ -38,27 +37,27 @@ public class Playlist {
         this.description = description;
     }
 
-    public ArrayList<testMovieInfoObject> getMovies() {
+    public ArrayList<playlistMovieInfoObject> getMovies() {
         return movies;
     }
 
-    public void setMovies(ArrayList<testMovieInfoObject> movies) {
+    public void setMovies(ArrayList<playlistMovieInfoObject> movies) {
         this.movies = movies;
     }
 
-    public void add(ArrayList<testMovieInfoObject> movies) {
+    public void add(ArrayList<playlistMovieInfoObject> movies) {
         this.movies.addAll(movies);
     }
 
-    public void remove(ArrayList<testMovieInfoObject> movies) {
-        for (testMovieInfoObject log : this.movies) {
+    public void remove(ArrayList<playlistMovieInfoObject> movies) {
+        for (playlistMovieInfoObject log : this.movies) {
             System.out.println(log.getTitle() + "hehe");
         }
-        for (testMovieInfoObject log : movies) {
+        for (playlistMovieInfoObject log : movies) {
             System.out.println(log.getTitle() + "ew");
         }
         this.movies.removeAll(movies);
-        for (testMovieInfoObject log : this.movies) {
+        for (playlistMovieInfoObject log : this.movies) {
             System.out.println(log.getTitle());
         }
     }

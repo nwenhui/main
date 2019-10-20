@@ -126,9 +126,7 @@ public class MovieInfoController extends Controller {
     @FXML public void setLabels() throws IOException {
         EditProfileJson editProfileJson = new EditProfileJson();
         userProfile = editProfileJson.load();
-//        EditPlaylistJson editPlaylistJson = new EditPlaylistJson();
         mProgressBar.setProgress(0.1);
-//        playlists = editPlaylistJson.load();
         ProfileCommands command = new ProfileCommands(userProfile);
         mProgressBar.setProgress(0.2);
         userNameLabel.setText(userProfile.getUserName());
@@ -149,7 +147,6 @@ public class MovieInfoController extends Controller {
         genreListText.getChildren().clear();
         genreListText.getChildren().addAll(preferences, restrictions);
         playlistLabel.setText(Integer.toString(userProfile.getPlaylistNames().size()));
-//        playlistLabel.setText(Integer.toString(playlists.size()));
     }
 
     @FXML public void initialize() throws IOException {

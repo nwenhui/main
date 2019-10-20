@@ -1,15 +1,10 @@
 package object;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 /**
  * Model class to represent a movie/tv show by storing details about it.
  */
-public class testMovieInfoObject {
+public class playlistMovieInfoObject {
     private long movieID;
     private String movieTitle;
     private String movieReleaseDate;
@@ -21,7 +16,6 @@ public class testMovieInfoObject {
     private double movieRating;
     private long[] movieGenreIDs;
     private boolean adult;
-//    private Collection collection;
 
         /**
          * Construct info about a movie/tv show
@@ -34,7 +28,7 @@ public class testMovieInfoObject {
          * @param posterPath Filepath of the movie/tv show poster.
          * @param backdropPath Filepath of the movie/tv show backdrop poster.
          */
-    public testMovieInfoObject(long ID, String title, String date, String summary, double rating, long[] genreIDs, String posterPath, String backdropPath, boolean adult) {
+    public playlistMovieInfoObject(long ID, String title, String date, String summary, double rating, long[] genreIDs, String posterPath, String backdropPath, boolean adult) {
         movieID = ID;
         movieTitle = title;
         movieReleaseDate = date;
@@ -44,7 +38,6 @@ public class testMovieInfoObject {
         movieFullBackdropPath = backdropPath;
         movieGenreIDs = genreIDs;
         this.adult = adult;
-//        this.collection = collection;
     }
 
     /**
@@ -118,17 +111,13 @@ public class testMovieInfoObject {
         return adult;
     }
 
-//    public Collection getCollection() {
-//        return collection;
-//    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        testMovieInfoObject testMovieInfoObject = (object.testMovieInfoObject) object;
-        if (testMovieInfoObject.getID() == movieID) {
+        playlistMovieInfoObject playlistMovieInfoObject = (playlistMovieInfoObject) object;
+        if (playlistMovieInfoObject.getID() == movieID) {
             return true;
         }
         return false;
