@@ -256,7 +256,6 @@ public class RetrieveRequest implements InfoFetcher, InfoFetcherWithPreference {
         fetchJSONData(requestURL);
     }
 
-
     public void beginMovieSearchRequest(String movieTitle, boolean adult) {
         try {
             String url = MAIN_URL + MOVIE_SEARCH_URL + API_KEY + "&query=" + URLEncoder.encode(movieTitle, "UTF-8") + "&include_adult=";
@@ -483,7 +482,7 @@ public class RetrieveRequest implements InfoFetcher, InfoFetcherWithPreference {
 
         Collection collection = (Collection) movieData.get(kCOLLECTION);
 
-        MovieInfoObject movieInfo = new MovieInfoObject(ID, title, releaseDate, summary, rating, genreIDs, posterPath, backdropPath, adult, collection);
+        MovieInfoObject movieInfo = new MovieInfoObject(ID, title, releaseDate, summary, rating, genreIDs, posterPath, backdropPath, adult);
 
         // If the base url was fetched and loaded, set the root path and poster size
         if (mImageBaseURL != null) {

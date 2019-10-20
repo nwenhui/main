@@ -1,15 +1,18 @@
 package object;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Model class to represent a movie/tv show by storing details about it.
  */
-public class MovieInfoObject {
+public class testMovieInfoObject {
     private long movieID;
     private String movieTitle;
-    private Date movieReleaseDate;
+    private String movieReleaseDate;
     private String movieSummary;
     private String moviePosterPath;
     private String movieFullPosterPath;
@@ -19,20 +22,6 @@ public class MovieInfoObject {
     private long[] movieGenreIDs;
     private boolean adult;
 //    private Collection collection;
-
-    public MovieInfoObject() {
-        movieID = 0;
-        movieTitle = "";
-        movieReleaseDate = new Date();
-        movieSummary = "";
-        moviePosterPath = "";
-        movieFullPosterPath = "";
-        movieBackdropPath = "";
-        movieFullBackdropPath = "";
-        movieRating = 0;
-        movieGenreIDs = new long[1];
-        boolean adult = true;
-    }
 
         /**
          * Construct info about a movie/tv show
@@ -45,14 +34,14 @@ public class MovieInfoObject {
          * @param posterPath Filepath of the movie/tv show poster.
          * @param backdropPath Filepath of the movie/tv show backdrop poster.
          */
-    public MovieInfoObject(long ID, String title, Date date, String summary, double rating, long[] genreIDs, String posterPath, String backdropPath, boolean adult) {
+    public testMovieInfoObject(long ID, String title, String date, String summary, double rating, long[] genreIDs, String posterPath, String backdropPath, boolean adult) {
         movieID = ID;
         movieTitle = title;
         movieReleaseDate = date;
         movieSummary = summary;
         movieRating = rating;
-        moviePosterPath = posterPath;
-        movieBackdropPath = backdropPath;
+        movieFullPosterPath = posterPath;
+        movieFullBackdropPath = backdropPath;
         movieGenreIDs = genreIDs;
         this.adult = adult;
 //        this.collection = collection;
@@ -89,7 +78,7 @@ public class MovieInfoObject {
      * This function returns the release date of the movie/tv show.
      * @return the release date of the movie/tv show.
      */
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return movieReleaseDate;
     }
 
@@ -129,19 +118,19 @@ public class MovieInfoObject {
         return adult;
     }
 
-    public String getPosterPath() {
-        return moviePosterPath;
-    }
-
-    public String getBackdropPath() {
-        return movieBackdropPath;
-    }
-
-    public void setMovieBackdropPath(String movieBackdropPath) {
-        this.movieBackdropPath = movieBackdropPath;
-    }
-
-    //    public Collection getCollection() {
+//    public Collection getCollection() {
 //        return collection;
 //    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        testMovieInfoObject testMovieInfoObject = (object.testMovieInfoObject) object;
+        if (testMovieInfoObject.getID() == movieID) {
+            return true;
+        }
+        return false;
+    }
 }

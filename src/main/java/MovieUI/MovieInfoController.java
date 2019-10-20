@@ -83,7 +83,7 @@ public class MovieInfoController extends Controller {
     @FXML Label playlistLabel;
 
     private UserProfile userProfile;
-    private ArrayList<Playlist> playlists;
+//    private ArrayList<Playlist> playlists;
 
     class KeyboardClick implements EventHandler<KeyEvent> {
 
@@ -126,9 +126,9 @@ public class MovieInfoController extends Controller {
     @FXML public void setLabels() throws IOException {
         EditProfileJson editProfileJson = new EditProfileJson();
         userProfile = editProfileJson.load();
-        EditPlaylistJson editPlaylistJson = new EditPlaylistJson();
+//        EditPlaylistJson editPlaylistJson = new EditPlaylistJson();
         mProgressBar.setProgress(0.1);
-        playlists = editPlaylistJson.load();
+//        playlists = editPlaylistJson.load();
         ProfileCommands command = new ProfileCommands(userProfile);
         mProgressBar.setProgress(0.2);
         userNameLabel.setText(userProfile.getUserName());
@@ -148,7 +148,8 @@ public class MovieInfoController extends Controller {
         restrictions.setFill(Paint.valueOf("#EC7063"));
         genreListText.getChildren().clear();
         genreListText.getChildren().addAll(preferences, restrictions);
-        playlistLabel.setText(Integer.toString(playlists.size()));
+        playlistLabel.setText(Integer.toString(userProfile.getPlaylistNames().size()));
+//        playlistLabel.setText(Integer.toString(playlists.size()));
     }
 
     @FXML public void initialize() throws IOException {
@@ -246,7 +247,16 @@ public class MovieInfoController extends Controller {
     // Loads the movie backdrop image asynchronously
     private void loadMovieBackdrop() {
         if (mMovie.getFullBackdropPath() != null) {
+            System.out.println(mMovie.getFullBackdropPath() + "how bout dis....");
             Image backdropImage = new Image(mMovie.getFullBackdropPath(), true);
+            mProgressBar.setProgress(0.9);
+            //backdropImage.progressProperty().addListener((observable, oldValue, newValue) -> updateProgressBar(mMovie, newValue.doubleValue()));
+            movieBackdropImageView.setImage(backdropImage);
+            mProgressBar.setProgress(1.0);
+            mProgressBar.setVisible(false);
+            mStatusLabel.setText("");
+        } else if (mMovie.getBackdropPath() != null){
+            Image backdropImage = new Image(mMovie.getBackdropPath(), true);
             mProgressBar.setProgress(0.9);
             //backdropImage.progressProperty().addListener((observable, oldValue, newValue) -> updateProgressBar(mMovie, newValue.doubleValue()));
             movieBackdropImageView.setImage(backdropImage);

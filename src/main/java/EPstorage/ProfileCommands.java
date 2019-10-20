@@ -224,4 +224,14 @@ public class ProfileCommands {
             return "restrict";
         }
     }
+
+    public void addPlaylist(String listName) throws IOException {
+        userProfile.addPlaylist(listName);
+        editProfileJson.updateProfile(userProfile);
+    }
+
+    public void deletePlaylist(String listName) throws IOException {
+        userProfile.deletePlaylist(listName);
+        editProfileJson.updateProfile(userProfile);
+    }
 }

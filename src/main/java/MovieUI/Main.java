@@ -4,6 +4,7 @@ package MovieUI;
  * This class handles application wide tasks and services.
  */
 
+import EPstorage.Playlist;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,12 +15,12 @@ import object.MovieInfoObject;
 import ui.Ui;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class Main extends Application {
     private Stage mainWindow;
     private Scene mainMoviesScene;
     private BorderPane mainLayout;
+
 
     public void start(Stage primaryStage) {
         mainWindow = primaryStage;
@@ -78,5 +79,45 @@ public class Main extends Application {
      */
     public void transitionBackToMoviesController() {
         mainWindow.setScene(mainMoviesScene);
+    }
+
+
+
+
+
+
+    public void transitToPlaylistController() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("PlaylistListings.fxml"));
+            mainLayout = loader.load();
+
+            // setup the controller's window and reference to this main application class
+            PlaylistHandler controller = loader.getController();
+            controller.setMainApplication(this);
+            controller.setWindow(mainWindow);
+            mainWindow.setScene(new Scene(mainLayout));
+        } catch (IOException e) {
+            Ui.printLine();
+            e.printStackTrace();
+        }
+    }
+
+    public void transitToPlaylistInfoController(Playlist playlist) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("PlaylistInfo.fxml"));
+            Pane layout = loader.load();
+
+            // setup controller
+            PlaylistInfoController controller = loader.getController();
+            controller.setWindow(mainWindow);
+            controller.setMainApplication(this);
+            controller.setPlaylist(playlist);
+            mainWindow.setScene(new Scene(layout));
+        } catch (IOException e) {
+            Ui.printLine();
+            e.printStackTrace();
+        }
     }
 }

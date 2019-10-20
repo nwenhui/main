@@ -27,6 +27,7 @@ import object.MovieInfoObject;
 import EPparser.CommandParser;
 import ui.Ui;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class MovieHandler extends Controller implements RequestListener {
     @FXML Label playlistLabel;
 
     private UserProfile userProfile;
-    private ArrayList<Playlist> playlists;
+//    private ArrayList<Playlist> playlists;
 
     private FlowPane mMoviesFlowPane;
 
@@ -136,8 +137,8 @@ public class MovieHandler extends Controller implements RequestListener {
     @FXML public void setLabels() throws IOException {
         EditProfileJson editProfileJson = new EditProfileJson();
         userProfile = editProfileJson.load();
-        EditPlaylistJson editPlaylistJson = new EditPlaylistJson();
-        playlists = editPlaylistJson.load();
+//        EditPlaylistJson editPlaylistJson = new EditPlaylistJson();
+//        playlists = editPlaylistJson.load();
         ProfileCommands command = new ProfileCommands(userProfile);
         userNameLabel.setText(userProfile.getUserName());
         userAgeLabel.setText(Integer.toString(userProfile.getUserAge()));
@@ -157,7 +158,16 @@ public class MovieHandler extends Controller implements RequestListener {
         restrictions.setFill(Paint.valueOf("#EC7063"));
         genreListText.getChildren().clear();
         genreListText.getChildren().addAll(preferences, restrictions);
-        playlistLabel.setText(Integer.toString(playlists.size()));
+//        (new File("main/playlists")).listFiles().length
+//        String[] playlistFiles = new File("../../../../main/config/checkstyle").list();
+        playlistLabel.setText(Integer.toString(userProfile.getPlaylistNames().size()));
+//        if (playlistFiles == null){
+//            System.out.println("yikes");
+//        }
+//        for (String log : playlistFiles) {
+//            System.out.println(log);
+//        }
+//        playlistLabel.setText(Integer.toString(new File("../../../../main/playlists/").list().length));
     }
 
     @FXML public void initialize() throws IOException {
@@ -279,7 +289,7 @@ public class MovieHandler extends Controller implements RequestListener {
         mMoviesFlowPane = new FlowPane(Orientation.HORIZONTAL);
         mMoviesFlowPane.setHgap(4);
         mMoviesFlowPane.setVgap(10);
-        mMoviesFlowPane.setPadding(new Insets(10, 8, 4, 8));
+        mMoviesFlowPane.setPadding(new Insets(0, 28, 0, 0));
         mMoviesFlowPane.prefWrapLengthProperty().bind(mMoviesScrollPane.widthProperty());   // bind to scroll pane width
 
         for (int i = 0; i < movies.size(); i++) {
@@ -399,9 +409,9 @@ public class MovieHandler extends Controller implements RequestListener {
         return userProfile;
     }
 
-    public ArrayList<Playlist> getPlaylists() {
-        return playlists;
-    }
+//    public ArrayList<Playlist> getPlaylists() {
+//        return playlists;
+//    }
 
     public ArrayList<MovieInfoObject> getmMovies() {
         return mMovies;
@@ -481,6 +491,11 @@ public class MovieHandler extends Controller implements RequestListener {
      */
     public void showTrendTV() {
         mMovieRequest.beginMovieRequest(RetrieveRequest.MoviesRequestType.TRENDING_TV, userProfile.isAdult());
+    }
+
+
+    public void goToPlaylistListing() {
+        mMainApplication.transitToPlaylistController();
     }
 
 }

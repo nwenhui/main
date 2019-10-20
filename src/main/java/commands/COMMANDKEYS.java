@@ -32,5 +32,6 @@ public enum COMMANDKEYS {
     create ,
     delete ,
     restriction ,
-    clear
+    clear ,
+    list
 }
