@@ -8,12 +8,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="87.0" prefWidth="414.0" style="-fx-padding: 5;" styleClass="posterPane" stylesheets="@Main_Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MovieUI.PlaylistPaneController">
     <children>
-        <VBox prefHeight="160.0" prefWidth="517.0" spacing="4.0" style="-fx-background-color: #424747#424747; -fx-padding: 5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox fx:id="individualPlaylistVBox" prefHeight="160.0" prefWidth="517.0" spacing="4.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label fx:id="playlistNameLabel" alignment="CENTER" prefHeight="36.0" prefWidth="517.0" style="-fx-font-size: 15; -fx-font-weight: bold;" styleClass="subtitle" text="Label">
                <font>
                   <Font size="20.0" />
-               </font></Label>
+               </font>
+            </Label>
             <Label fx:id="playlistDescriptionLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="517.0" style="-fx-font-size: 13;" styleClass="subtitle" text="Label">
                <font>
                   <Font size="15.0" />

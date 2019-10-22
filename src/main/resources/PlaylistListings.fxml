@@ -32,7 +32,7 @@
             <children>
                 <ScrollPane fx:id="PlaylistScrollPane" hbarPolicy="NEVER" prefHeight="353.0" prefWidth="532.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
                <content>
-                  <VBox fx:id="playlistVBox" prefHeight="353.0" prefWidth="515.0" />
+                  <VBox fx:id="playlistVBox" alignment="CENTER" prefHeight="353.0" prefWidth="515.0" />
                </content>
                 </ScrollPane>
             </children>

@@ -195,29 +195,29 @@ public class PlaylistHandler extends Controller {
         });
     }
 
-    private void buildPlaylistFlowPane(ArrayList<String> playlists) throws IOException {
-        // Setup progress bar and status label
-        mProgressBar.setProgress(0.0);
-        mProgressBar.setVisible(true);
-        mStatusLabel.setText("Loading..");
-
-        // Build a flow pane layout with the width and size of the
-        mPlaylistFlowPane = new FlowPane(Orientation.VERTICAL);
-        mPlaylistFlowPane.setHgap(4);
-        mPlaylistFlowPane.setVgap(10);
-        mPlaylistFlowPane.setPadding(new Insets(10, 8, 4, 8));
-        mPlaylistFlowPane.prefWrapLengthProperty().bind(PlaylistScrollPane.widthProperty());   // bind to scroll pane width
-
-        for (String log : playlists) {
-            Playlist playlist = new EditPlaylistJson(log).load();
-            AnchorPane playlistPane = buildPlaylistPane(playlist);
-            mPlaylistFlowPane.getChildren().add(playlistPane);
-            System.out.println(playlist.getMovies().size());
-        }
-
-        PlaylistScrollPane.setContent(mPlaylistFlowPane);
-        PlaylistScrollPane.setVvalue(0);
-    }
+//    private void buildPlaylistFlowPane(ArrayList<String> playlists) throws IOException {
+//        // Setup progress bar and status label
+//        mProgressBar.setProgress(0.0);
+//        mProgressBar.setVisible(true);
+//        mStatusLabel.setText("Loading..");
+//
+//        // Build a flow pane layout with the width and size of the
+//        mPlaylistFlowPane = new FlowPane(Orientation.VERTICAL);
+//        mPlaylistFlowPane.setHgap(4);
+//        mPlaylistFlowPane.setVgap(10);
+//        mPlaylistFlowPane.setPadding(new Insets(10, 8, 4, 8));
+//        mPlaylistFlowPane.prefWrapLengthProperty().bind(PlaylistScrollPane.widthProperty());   // bind to scroll pane width
+//
+//        for (String log : playlists) {
+//            Playlist playlist = new EditPlaylistJson(log).load();
+//            AnchorPane playlistPane = buildPlaylistPane(playlist);
+//            mPlaylistFlowPane.getChildren().add(playlistPane);
+//            System.out.println(playlist.getMovies().size());
+//        }
+//
+//        PlaylistScrollPane.setContent(mPlaylistFlowPane);
+//        PlaylistScrollPane.setVvalue(0);
+//    }
 
     private void buildPlaylistVBox(ArrayList<String> playlists) throws IOException {
         // Setup progress bar and status label
@@ -225,10 +225,12 @@ public class PlaylistHandler extends Controller {
         mProgressBar.setVisible(true);
         mStatusLabel.setText("Loading..");
 
+        int count = 1;
         for (String log : playlists) {
             Playlist playlist = new EditPlaylistJson(log).load();
-            AnchorPane playlistPane = buildPlaylistPane(playlist);
+            AnchorPane playlistPane = buildPlaylistPane(playlist, count);
             playlistVBox.getChildren().add(playlistPane);
+            count++;
 //            mPlaylistFlowPane.getChildren().add(playlistPane);
 //            System.out.println(playlist.getMovies().size());
         }
@@ -237,7 +239,7 @@ public class PlaylistHandler extends Controller {
         PlaylistScrollPane.setVvalue(0);
     }
 
-    private AnchorPane buildPlaylistPane(Playlist playlist) {
+    private AnchorPane buildPlaylistPane(Playlist playlist, int i) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("PlaylistPane.fxml"));
@@ -253,6 +255,7 @@ public class PlaylistHandler extends Controller {
             });
             // set the movie info
             PlaylistPaneController controller = loader.getController();
+            controller.setVBoxColour(i);
             controller.getPlaylistNameLabel().setText(playlist.getPlaylistName());
             if (playlist.getDescription().trim().length() == 0) {
                 controller.getPlaylistDescriptionLabel().setStyle("-fx-font-style: italic");
