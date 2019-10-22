@@ -55,12 +55,12 @@ public class PlaylistCommands {
         }
         Playlist playlist = editPlaylistJson.load();
         ArrayList<playlistMovieInfoObject> newPlaylistMovies = convert(playlistMovies);
-        if (playlist.getMovies().get(1).equals(newPlaylistMovies.get(0))) {
-            System.out.println("yes");
-        } else {
-            System.out.println("no");
-            System.out.println(newPlaylistMovies.get(0).getTitle());
-        }
+//        if (playlist.getMovies().get(1).equals(newPlaylistMovies.get(0))) {
+//            System.out.println("yes");
+//        } else {
+//            System.out.println("no");
+//            System.out.println(newPlaylistMovies.get(0).getTitle());
+//        }
             playlist.remove(newPlaylistMovies);
 //        playlist.remove(removeMovies);
         editPlaylistJson.editPlaylist(playlist);
@@ -101,7 +101,7 @@ public class PlaylistCommands {
         }
     }
 
-    public String appendFlagMap(ArrayList<String> flagMapArrayList) {
+    private String appendFlagMap(ArrayList<String> flagMapArrayList) {
         String appends = "";
         boolean flag = true;
         for (String log : flagMapArrayList) {
@@ -139,6 +139,7 @@ public class PlaylistCommands {
         Playlist playlist = editPlaylistJson.load();
         playlist.setPlaylistName(newName);
         playlist.setDescription(description);
+        editPlaylistJson.renamePlaylist(playlist, newName);
         editPlaylistJson.editPlaylist(playlist);
     }
 }

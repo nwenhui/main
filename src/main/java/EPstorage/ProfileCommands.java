@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -231,6 +232,20 @@ public class ProfileCommands {
 
     public void deletePlaylist(String listName) throws IOException {
         userProfile.deletePlaylist(listName);
+        editProfileJson.updateProfile(userProfile);
+    }
+
+    public void renamePlaylist(String oldName, String newName) throws IOException {
+        ArrayList<String> playlistNames = userProfile.getPlaylistNames();
+        ArrayList<String> newPlaylistNames = new ArrayList<>();
+        for (String log : playlistNames) {
+            if (!log.equals(oldName)) {
+                newPlaylistNames.add(log);
+            } else {
+                newPlaylistNames.add(newName);
+            }
+        }
+        userProfile.setPlaylistNames(newPlaylistNames);
         editProfileJson.updateProfile(userProfile);
     }
 }

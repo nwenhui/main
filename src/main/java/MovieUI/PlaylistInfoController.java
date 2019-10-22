@@ -66,6 +66,7 @@ public class PlaylistInfoController extends Controller {
     VBox playlistBox;
 
     private UserProfile userProfile;
+    private String playlistName;
     private int num = 0;
 
     class KeyboardClick implements EventHandler<KeyEvent> {
@@ -82,9 +83,14 @@ public class PlaylistInfoController extends Controller {
                 System.out.println("Hello");
                 try {
                     if (mSearchTextField.getText().equals("go back")) {
+//                        backToMoviesButtonClick();
+                        backToPlaylistButtonClick();
+                    }
+                    else if (mSearchTextField.getText().equals("go home")) {
                         backToMoviesButtonClick();
+//                        backToPlaylistButtonClick();
                     } else {
-                        mMainApplication.transitionBackToMoviesController();
+//                        mMainApplication.transitionBackToMoviesController();
                         CommandParser.parseCommands(mSearchTextField.getText(), control);
                     }
                 } catch (IOException e) {
@@ -103,6 +109,7 @@ public class PlaylistInfoController extends Controller {
     // Set the playlist for this controller
     public void setPlaylist(Playlist playlist) throws IOException {
         this.playlist = playlist;
+        this.playlistName = playlist.getPlaylistName();
         initialize();
     }
 
@@ -133,6 +140,10 @@ public class PlaylistInfoController extends Controller {
     }
 
     @FXML public void initialize() throws IOException {
+        if (playlist != null) {
+//            playlistName = playlist.getPlaylistName();
+//            System.out.println("hehehehehehehehehehehe" + playlistName);
+        }
         setLabels();
         CommandContext.initialiseContext();
 //        mMovies = convert(playlist.getMovies());
@@ -142,13 +153,16 @@ public class PlaylistInfoController extends Controller {
         // Load the movie info if movie has been set
         if (playlist != null) {
             playlistNameLabel.setText(playlist.getPlaylistName());
-            playlistDescriptionLabel.setText(playlist.getDescription());
+            if (playlist.getDescription().trim().length() != 0) {
+                playlistDescriptionLabel.setText(playlist.getDescription());
+            } else {
+                playlistDescriptionLabel.setStyle("-fx-font-style: italic");
+                playlistDescriptionLabel.setText("*this playlist does not have a description :(*");
+            }
             mProgressBar.setProgress(0.4);
             if (!playlist.getMovies().isEmpty()) {
                 mMovies = convert(playlist.getMovies());
                 buildMoviesFlowPane(mMovies);
-            } else {
-
             }
 
             mMoviesScrollPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -341,6 +355,10 @@ public class PlaylistInfoController extends Controller {
         mMainApplication.transitionBackToMoviesController();
     }
 
+    public void backToPlaylistButtonClick() {
+        mMainApplication.transitToPlaylistController();
+    }
+
     private void clearText(TextField textField) {
         textField.setText("");
     }
@@ -353,5 +371,16 @@ public class PlaylistInfoController extends Controller {
 
     @FXML
     public void aboutMenuItemClicked() {
+    }
+
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
+    }
+
+    public void refreshPlaylist() throws IOException {
+        EditPlaylistJson editPlaylistJson = new EditPlaylistJson(playlistName);
+        playlist = editPlaylistJson.load();
+        mMovies = convert(playlist.getMovies());
+        buildMoviesFlowPane(mMovies);
     }
 }

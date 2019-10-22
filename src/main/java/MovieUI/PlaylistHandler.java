@@ -36,6 +36,8 @@ public class PlaylistHandler extends Controller {
     @FXML
     private Text text;
 
+    @FXML VBox playlistVBox;
+
     @FXML Label userNameLabel;
     @FXML Label userAgeLabel;
     @FXML Label adultLabel;
@@ -79,8 +81,13 @@ public class PlaylistHandler extends Controller {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 System.out.println("Hello");
                 try {
-                    CommandParser.parseCommands(mSearchTextField.getText(), control);
-                    clearSearchTextField();
+                    if (mSearchTextField.getText().equals("go back")) {
+                        backToMoviesButtonClick();
+//                        backToPlaylistButtonClick();
+                    } else {
+                        CommandParser.parseCommands(mSearchTextField.getText(), control);
+                        clearSearchTextField();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -129,7 +136,8 @@ public class PlaylistHandler extends Controller {
     @FXML public void initialize() throws IOException {
         setLabels();
         CommandContext.initialiseContext();
-        buildPlaylistFlowPane(playlists);
+//        buildPlaylistFlowPane(playlists);
+        buildPlaylistVBox(playlists);
 
         mSearchTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.TAB) {
@@ -164,13 +172,20 @@ public class PlaylistHandler extends Controller {
                     }
                 } else if (event.getCode().equals(KeyCode.DOWN)) {
                     System.out.println("yesssx");
-                    mPlaylistFlowPane.getChildren().get(num).requestFocus();
+                    playlistVBox.getChildren().get(num).requestFocus();
                     num += 1;
                     //mMoviesFlowPane.getChildren().get(num).();
                 } else if (event.getCode().equals(KeyCode.ENTER)) {
                     try {
-                        playlistPaneClicked(new EditPlaylistJson(playlists.get(0)).load());
-                        System.out.println("jajajajaajajaj");
+//                        if (mSearchTextField.getText().equals("go back")) {
+//                            mMainApplication.transitionBackToMoviesController();
+//                            CommandParser.parseCommands(mSearchTextField.getText(), control);
+////                            backToMoviesButtonClick();
+////                            backToPlaylistButtonClick();
+//                        } else {
+                            playlistPaneClicked(new EditPlaylistJson(playlists.get(0)).load());
+                            System.out.println("jajajajaajajaj");
+//                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -204,11 +219,30 @@ public class PlaylistHandler extends Controller {
         PlaylistScrollPane.setVvalue(0);
     }
 
+    private void buildPlaylistVBox(ArrayList<String> playlists) throws IOException {
+        // Setup progress bar and status label
+        mProgressBar.setProgress(0.0);
+        mProgressBar.setVisible(true);
+        mStatusLabel.setText("Loading..");
+
+        for (String log : playlists) {
+            Playlist playlist = new EditPlaylistJson(log).load();
+            AnchorPane playlistPane = buildPlaylistPane(playlist);
+            playlistVBox.getChildren().add(playlistPane);
+//            mPlaylistFlowPane.getChildren().add(playlistPane);
+//            System.out.println(playlist.getMovies().size());
+        }
+
+        PlaylistScrollPane.setContent(playlistVBox);
+        PlaylistScrollPane.setVvalue(0);
+    }
+
     private AnchorPane buildPlaylistPane(Playlist playlist) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("PlaylistPane.fxml"));
             AnchorPane playlistPane = loader.load();
+//            playlistPane.setRightAnchor(00);
 //            posterView.setOnScroll();
             playlistPane.setOnMouseClicked((mouseEvent) -> {
                 try {
@@ -220,8 +254,13 @@ public class PlaylistHandler extends Controller {
             // set the movie info
             PlaylistPaneController controller = loader.getController();
             controller.getPlaylistNameLabel().setText(playlist.getPlaylistName());
-            controller.getPlaylistDescriptionLabel().setText(playlist.getDescription());
-            controller.getPlaylistMoviesLabel().setText(Integer.toString(playlist.getMovies().size()));
+            if (playlist.getDescription().trim().length() == 0) {
+                controller.getPlaylistDescriptionLabel().setStyle("-fx-font-style: italic");
+                controller.getPlaylistDescriptionLabel().setText("*this playlist does not have a description :(*");
+            } else {
+                controller.getPlaylistDescriptionLabel().setText(playlist.getDescription());
+            }
+            controller.getPlaylistMoviesLabel().setText("No. of movies: " + Integer.toString(playlist.getMovies().size()));
             return playlistPane;
         } catch (IOException ex) {
             Ui.printLine();
@@ -277,6 +316,11 @@ public class PlaylistHandler extends Controller {
     public void updateTextField(String updateStr){
         mSearchTextField.setText(mSearchTextField.getText() + updateStr);
         mSearchTextField.positionCaret(mSearchTextField.getText().length());
+    }
+
+    // User clicks on the back button to navigate back to the movies scene
+    public void backToMoviesButtonClick() {
+        mMainApplication.transitionBackToMoviesController();
     }
 
     public void setFeedbackText(ArrayList<String> txtArr){

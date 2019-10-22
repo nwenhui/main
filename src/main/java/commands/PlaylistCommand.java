@@ -1,12 +1,16 @@
 package commands;
 
 import EPstorage.EditProfileJson;
+import EPstorage.Playlist;
 import EPstorage.ProfileCommands;
 import EPstorage.PlaylistCommands;
 import MovieUI.Controller;
 import MovieUI.MovieHandler;
+import MovieUI.PlaylistHandler;
+import MovieUI.PlaylistInfoController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlaylistCommand extends CommandSuper {
 
@@ -68,13 +72,14 @@ public class PlaylistCommand extends CommandSuper {
      * flag: none
      */
     private void executeDeletePlaylist() throws IOException {
-        MovieHandler movieHandler = ((MovieHandler) this.getUIController());
+        PlaylistInfoController movieHandler = ((PlaylistInfoController) this.getUIController());
         ProfileCommands profileCommands = new ProfileCommands(new EditProfileJson().load());
         profileCommands.deletePlaylist(this.getPayload());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.delete();
         movieHandler.clearSearchTextField();
         movieHandler.setLabels();
+        movieHandler.backToPlaylistButtonClick();
     }
 
     /**
@@ -99,10 +104,12 @@ public class PlaylistCommand extends CommandSuper {
      * flag: -m (movie number -- not movie ID)
      */
     private void executeRemoveFromPlaylist() throws IOException {
-        MovieHandler movieHandler = ((MovieHandler) this.getUIController());
+        PlaylistInfoController movieHandler = ((PlaylistInfoController) this.getUIController());
+        movieHandler.setPlaylistName(this.getPayload());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.remove(this.getFlagMap(), movieHandler.getmMovies());
         movieHandler.clearSearchTextField();
+        movieHandler.refreshPlaylist();
     }
 
     /**
@@ -113,10 +120,17 @@ public class PlaylistCommand extends CommandSuper {
      * flag: -n (for new playlist name) -d (for new playlist description)
      */
     private void executeSetToPlaylist() throws IOException {
-        MovieHandler movieHandler = ((MovieHandler) this.getUIController());
+        PlaylistInfoController movieHandler = ((PlaylistInfoController) this.getUIController());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.setToPlaylist(this.getFlagMap());
+        String appendName = appendFlagMap(this.getFlagMap().get("-n"));
+        if (this.getFlagMap().containsKey("-n")) {
+            ProfileCommands profileCommands = new ProfileCommands(new EditProfileJson().load());
+            profileCommands.renamePlaylist(this.getPayload(), appendName);
+            movieHandler.setPlaylistName(appendName);
+        }
         movieHandler.clearSearchTextField();
+        movieHandler.refreshPlaylist();
     }
 
     /**
@@ -127,15 +141,29 @@ public class PlaylistCommand extends CommandSuper {
      * flag: none
      */
     private void executeClearPlaylist() throws IOException {
-        MovieHandler movieHandler = ((MovieHandler)this.getUIController());
+        PlaylistInfoController movieHandler = ((PlaylistInfoController)this.getUIController());
         PlaylistCommands testCommand = new PlaylistCommands(this.getPayload());
         testCommand.clear();
         movieHandler.clearSearchTextField();
+        movieHandler.initialize();
     }
 
     private void executePlaylistListing() {
         MovieHandler movieHandler = ((MovieHandler)this.getUIController());
         movieHandler.goToPlaylistListing();
         movieHandler.clearSearchTextField();
+    }
+
+    private String appendFlagMap(ArrayList<String> flagMapArrayList) {
+        String appends = "";
+        boolean flag = true;
+        for (String log : flagMapArrayList) {
+            if (!flag) {
+                appends += ", ";
+            }
+            appends += log.trim();
+            flag = false;
+        }
+        return appends;
     }
 }

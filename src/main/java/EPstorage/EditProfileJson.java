@@ -30,6 +30,6 @@ public class EditProfileJson {
      */
     public void updateProfile(UserProfile userProfile) throws IOException {
         mapper.writeValue(file, userProfile);
-        inputStream.close();
+//        inputStream.close();
     }
 }
