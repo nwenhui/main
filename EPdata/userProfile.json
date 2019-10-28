@@ -1,1 +1,13 @@
-{"userName":"pradeep","userAge":22,"genreId":[35]}
+{
+  "name": "me",
+  "age": 18,
+  "genreIdPreference": [],
+  "genreIdRestriction": [
+    16
+  ],
+  "adult": false,
+  "playlistNames": [],
+  "sortByAlphabetical": false,
+  "sortByHighestRating": false,
+  "sortByLatestRelease": true
+}
